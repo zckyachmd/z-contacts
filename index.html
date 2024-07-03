@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Title -->
+  <title>ZContacts</title>
+
+  <!-- Styles -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <nav class="navbar bg-body-tertiary">
+      <div class="container">
+        <a href="/" class="navbar-brand">ZContacts</a>
+        <div class="d-flex">
+          <a class="btn btn-sm btn-primary" href="/new.html">Add Contact</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container my-5">
+    <div class="card">
+      <div class="card-header">
+        <span class="justify-end" id="search-form">
+          <input type="text" id="search" name="search" class="form-control" placeholder="Search">
+        </span>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Job Title & Company</th>
+            </tr>
+          </thead>
+          <tbody id="contacts-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+  <script src="/assets/js/storage.js"></script>
+
+  <script>
+    const renderContacts = () => {
+      const contacts = getContacts();
+      const contactsTable = document.getElementById('contacts-table');
+
+      if (contacts.length === 0) {
+        contactsTable.innerHTML = '<tr><td colspan="4">No contacts found.</td></tr>';
+        return;
+      }
+
+      contacts.forEach(contact => {
+        const fullName = `${contact.name.first} ${contact.name.middle} ${contact.name.last}`;
+        const phoneNumbers = contact.phone.map(phone => phone.number).join(', ');
+        const emails = contact.email.length > 0 ? contact.email.map(email => email.address).join(', ') : '-';
+        const company = contact.company && contact.company.name && contact.company.jobTitle
+          ? `${contact.company.name}, ${contact.company.jobTitle}`
+          : '-';
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${fullName}</td>
+          <td>${emails}</td>
+          <td>${phoneNumbers}</td>
+          <td>${company}</td>
+        `;
+        contactsTable.appendChild(row);
+      });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      feather.replace();
+      renderContacts();
+    });
+  </script>
+</body>
+
+</html>
