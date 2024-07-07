@@ -276,11 +276,18 @@
       renderOptions(Window.emailLabels, 'email-label');
 
       const formContact = document.getElementById('new-contact-form');
-      formContact.addEventListener('submit', e => {
+      formContact.addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(formContact);
         const contact = Object.fromEntries(formData.entries());
-        saveContact(contact);
+        const saveResult = saveContact(contact);
+
+        if (!saveResult || !saveResult.id) {
+          alert('Failed to save contact. Please try again.');
+          return;
+        }
+
+        window.location.href = '/detail.html?id=' + saveResult.id;
       });
     });
   </script>

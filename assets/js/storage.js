@@ -74,6 +74,8 @@ const saveContact = (data) => {
     savedContacts.push(formattedData);
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(savedContacts));
+
+    return { id: id.toString() };
   } catch (error) {
     console.error("Error saving contact:", error);
     throw new Error("Failed to save contact. Please try again.");
@@ -110,44 +112,39 @@ const getContactById = (id) => {
  * @throws {Error} If there was an issue updating the contact. Please try again.
  */
 const updateContact = (id, newData) => {
-  try {
-    let savedContacts = getContacts();
+  let savedContacts = getContacts();
 
-    // Cari index kontak berdasarkan ID
-    const index = savedContacts.findIndex((contact) => contact.id === id);
+  // Cari index kontak berdasarkan ID
+  const index = savedContacts.findIndex((contact) => contact.id === id);
 
-    if (index !== -1) {
-      // Update data kontak dengan newData
-      savedContacts[index] = {
-        id: id.toString(),
-        name: {
-          first: newData.firstName || "",
-          middle: newData.middleName || "",
-          last: newData.lastName || "",
-        },
-        company: {
-          name: newData.company || "",
-          jobTitle: newData.jobTitle || "",
-        },
-        email: newData.email || [],
-        phone: newData.phone || [],
-        address: {
-          country: newData.country || "",
-          streetAddress: newData.streetAddress || "",
-          city: newData.city || "",
-          postalCode: newData.postalCode || "",
-        },
-        notes: newData.notes || "",
-      };
+  if (index !== -1) {
+    // Update data kontak dengan newData
+    savedContacts[index] = {
+      id: id.toString(),
+      name: {
+        first: newData.firstName || "",
+        middle: newData.middleName || "",
+        last: newData.lastName || "",
+      },
+      company: {
+        name: newData.company || "",
+        jobTitle: newData.jobTitle || "",
+      },
+      email: newData.email || [],
+      phone: newData.phone || [],
+      address: {
+        country: newData.country || "",
+        streetAddress: newData.streetAddress || "",
+        city: newData.city || "",
+        postalCode: newData.postalCode || "",
+      },
+      notes: newData.notes || "",
+    };
 
-      // Simpan kembali ke localStorage
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(savedContacts));
-    } else {
-      throw new Error(`Contact with id ${id} not found.`);
-    }
-  } catch (error) {
-    console.error(`Error updating contact with id ${id}:`, error);
-    throw new Error("Failed to update contact. Please try again.");
+    // Simpan kembali ke localStorage
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(savedContacts));
+  } else {
+    throw new Error(`Contact with id ${id} not found.`);
   }
 };
 
@@ -160,6 +157,11 @@ const updateContact = (id, newData) => {
 const deleteContact = (id) => {
   try {
     let savedContacts = getContacts();
+
+    // Cek apakah ada kontak yang ID-nya sesuai
+    if (!savedContacts.some((contact) => contact.id === id)) {
+      throw new Error(`Contact with id ${id} not found.`);
+    }
 
     // Filter kontak yang ID-nya tidak sesuai dengan yang akan dihapus
     savedContacts = savedContacts.filter((contact) => contact.id !== id);

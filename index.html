@@ -65,18 +65,30 @@
       contacts.forEach(contact => {
         const fullName = `${contact.name.first} ${contact.name.middle} ${contact.name.last}`;
         const phoneNumbers = contact.phone.map(phone => phone.number).join(', ');
-        const emails = contact.email.length > 0 ? contact.email.map(email => email.address).join(', ') : '-';
-        const company = contact.company && contact.company.name && contact.company.jobTitle
+        const emails = contact.email.length ? contact.email.map(email => email.address).join(', ') : '-';
+        const company = contact.company?.name && contact.company?.jobTitle
           ? `${contact.company.name}, ${contact.company.jobTitle}`
           : '-';
 
+        const createCell = (content, isLink = false) => {
+          const cell = document.createElement('td');
+          if (isLink) {
+            const link = document.createElement('a');
+            link.href = `/detail.html?id=${contact.id}`;
+            link.textContent = content;
+            cell.appendChild(link);
+          } else {
+            cell.textContent = content;
+          }
+          return cell;
+        };
+
         const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${fullName}</td>
-          <td>${emails}</td>
-          <td>${phoneNumbers}</td>
-          <td>${company}</td>
-        `;
+        row.appendChild(createCell(fullName, true));
+        row.appendChild(createCell(emails));
+        row.appendChild(createCell(phoneNumbers));
+        row.appendChild(createCell(company));
+
         contactsTable.appendChild(row);
       });
     };
