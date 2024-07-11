@@ -10,7 +10,7 @@
     content="Z-Contacts, CRM, Customer Relationship Management, Tailwind CSS, Flowbite, Feather Icons, SweetAlert2, OpenStreetMap, Contact Management, Responsive Design, Interactive Maps" />
   <meta name="author" content="Zacky Achmad">
 
-  <title>Home / ZContacts</title>
+  <title>Info / ZContacts</title>
 
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico">
@@ -25,7 +25,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.2/feather.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200 transition-all duration-300">
@@ -33,32 +32,47 @@
     <div class="bg-white dark:bg-gray-800 px-4 py-6 rounded min-h-screen">
       <!-- Header -->
       <header>
-        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">ZContacts</h1>
-        <p class="text-gray-600 dark:text-gray-300 text-sm">Explore and manage your contact's information with ease.</p>
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Project Info</h1>
         <hr class="mt-3" />
       </header>
 
-      <!-- Search Form -->
-      <form class="mt-8 mx-auto" id="form-search" action="#" method="POST">
-        <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-        <div class="relative">
-          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <i data-feather="search" class="w-4 h-4 text-gray-500 dark:text-gray-400"></i>
-          </div>
-          <input type="search" id="search"
-            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search for contacts...">
-          <button type="submit"
-            class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-        </div>
-        <button type="reset" id="reset-search"
-          class="hidden text-blue-500 hover:text-blue-600 focus:outline-none font-medium text-sm px-2 py-2">
-          Reset
-        </button>
-      </form>
+      <!-- Project Description -->
+      <div class="mt-4 mb-20 space-y-8">
+        <p class="text-gray-600 dark:text-gray-300">ZContacts is a Customer Relationship Management (CRM) application
+          designed
+          to help you manage your contacts efficiently. This project utilizes modern web technologies to provide a
+          smooth and
+          responsive user experience.</p>
 
-      <!-- Contact List -->
-      <div class="mt-8 my-20" id="contact-list"></div>
+        <!-- Technology Stack -->
+        <div>
+          <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-2">Technology Stack</h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li class="text-gray-600 dark:text-gray-300">Tailwind CSS: A utility-first CSS framework for styling the
+              application.</li>
+            <li class="text-gray-600 dark:text-gray-300">Flowbite: A library of interactive components built on Tailwind
+              CSS.
+            </li>
+            <li class="text-gray-600 dark:text-gray-300">Feather Icons: Simple and elegant icons for UI elements.</li>
+            <li class="text-gray-600 dark:text-gray-300">SweetAlert2: Beautiful and customizable alert boxes for user
+              notifications.</li>
+            <li class="text-gray-600 dark:text-gray-300">OpenStreetMap: A collaborative project to create a free
+              editable
+              map of
+              the world, used for displaying contact locations.</li>
+          </ul>
+        </div>
+
+        <!-- GitHub Repository -->
+        <div>
+          <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-2">GitHub Repository</h2>
+          <p class="text-gray-600 dark:text-gray-300">
+            ZContacts is authored by Zacky Achmad. The source code is available on
+            <a href="https://github.com/zckyachmd/z-contacts" target="_blank"
+              class="text-blue-500 hover:underline">GitHub</a>.
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -85,9 +99,7 @@
   </div>
 
   <!-- Scripts -->
-  <script src="./assets/js/global.js"></script>
   <script src="./assets/js/storage.js"></script>
-  <script src="./assets/js/index.js"></script>
 </body>
 
 </html>

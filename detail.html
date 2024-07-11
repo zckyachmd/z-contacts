@@ -4,101 +4,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detail - ZContacts</title>
+  <meta name="description"
+    content="Z-Contacts is a modern Customer Relationship Management (CRM) application designed to help you manage your contacts efficiently. Built with Tailwind CSS, Flowbite, Feather Icons, SweetAlert2, and OpenStreetMap." />
+  <meta name="keywords"
+    content="Z-Contacts, CRM, Customer Relationship Management, Tailwind CSS, Flowbite, Feather Icons, SweetAlert2, OpenStreetMap, Contact Management, Responsive Design, Interactive Maps" />
+  <meta name="author" content="Zacky Achmad">
+  
+  <title>Detail / ZContacts</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon/favicon-16x16.png">
 
   <!-- Styles -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
-<body>
-  <header>
-    <nav class="navbar bg-body-tertiary">
-      <div class="container">
-        <a href="/" class="navbar-brand">ZContacts</a>
-        <div class="d-flex">
-          <a class="btn btn-sm btn-primary" href="/new.html">Add Contact</a>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <main class="container my-5">
-    <div class="card">
-      <div class="card-header">
-        Detail - ZContacts
-      </div>
-      <div class="card-body">
-        <p class="card-text">Contact detail</p>
-        <a href="/" class="btn btn-sm btn-primary">Back</a>
-        <a href="#" class="btn btn-sm btn-primary" id="btn-edit">Edit</a>
-        <a href="#" class="btn btn-sm btn-danger" id="btn-delete">Delete</a>
-
-        <hr>
-
-        <div id="detail-contact">
-          Contact not found!
-        </div>
-      </div>
-    </div>
-  </main>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" />
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" />
 
   <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
-  <script src="/assets/js/storage.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.2/feather.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+</head>
 
-  <script>
-    /**
-     * Render contact detail
-     * 
-     * @param {Object} contact
-     * @returns {void}
-     */
-    const renderContact = contact => {
-      const contactDetail = document.getElementById('detail-contact');
-      const fullName = `${contact.name.first} ${contact.name.last}`;
-      const phoneNumbers = contact.phone.map(phone => phone.number).join(', ');
-      const emails = contact.email.length ? contact.email.map(email => email.address).join(', ') : '-';
-      const company = contact.company?.name && contact.company?.jobTitle
-        ? `${contact.company.name}, ${contact.company.jobTitle}`
-        : '-';
-      const address = contact.address?.streetAddress && contact.address?.city
-        ? `${contact.address.streetAddress}, ${contact.address.city}`
-        : '-';
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200 transition-all duration-300">
+  <div class="max-w-lg mx-auto">
+    <div class="bg-white dark:bg-gray-800 px-4 py-6 rounded min-h-screen">
+      <!-- Header -->
+      <header>
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Contact Details</h1>
+        <p class="text-gray-600 dark:text-gray-300 text-sm">View information about this contact.</p>
+        <hr class="mt-3" />
+      </header>
 
-      contactDetail.innerHTML = `
-          <h5 class="card-title">${fullName}</h5>
-          <p class="card-text">${phoneNumbers}</p>
-          <p class="card-text">${emails}</p>
-          <p class="card-text">${company}</p>
-          <p class="card-text">${address}</p>
-        `;
-    };
+      <!-- Profile Header -->
+      <div class="sticky top-0 bg-white dark:bg-gray-800 my-auto z-10">
+        <div class="flex items-center justify-between p-5">
+          <div class="flex items-center space-x-4">
+            <div
+              class="w-20 h-20 flex-shrink-0 overflow-hidden rounded-full border-2 border-gray-300 dark:border-gray-700">
+              <img src="https://ui-avatars.com/api/name=Avatar" id="avatar" alt="Profile Picture"
+                class="object-cover w-full h-full">
+            </div>
+            <div>
+              <h1 class="text-xl font-bold dark:text-white" id="name">
+                Name
+              </h1>
+              <p class="text-gray-600 dark:text-gray-400" id="company">
+                Company
+              </p>
+            </div>
+          </div>
 
-    document.addEventListener('DOMContentLoaded', () => {
-      feather.replace();
+          <!-- Edit and Delete Buttons -->
+          <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
+            <button
+              class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500 text-white hover:bg-blue-600 focus:outline-none"
+              title="Edit Contact" alt="Edit Contact" id="btn-edit">
+              <i data-feather="edit-2" class="w-4 h-4"></i>
+            </button>
+            <button
+              class="flex items-center justify-center w-10 h-10 rounded-full bg-red-500 text-white hover:bg-red-600 focus:outline-none"
+              title="Delete Contact" alt="Delete Contact" id="btn-delete">
+              <i data-feather="trash-2" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
 
-      const params = new URLSearchParams(window.location.search);
-      const id = params.get('id');
-      const findedContact = getContactById(id);
-      if (findedContact) {
-        renderContact(findedContact);
-      }
+      <!-- Contact Details -->
+      <div class="mt-4 space-y-4">
+        <!-- Phone -->
+        <div class="flex items-center space-x-4">
+          <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <i data-feather="phone" class="w-6 h-6 text-gray-500 dark:text-gray-300"></i>
+          </div>
+          <div>
+            <span class="font-semibold text-gray-600 dark:text-white">Phone:</span>
+            <span class="text-gray-800 dark:text-white" id="phone">
+              Phone
+            </span>
+          </div>
+        </div>
 
-      const btnDelete = document.getElementById('btn-delete');
-      btnDelete.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (confirm('Are you sure?')) {
-          try {
-            deleteContact(id);
-            window.location.href = '/';
-          } catch (error) {
-            alert(error.message);
-          }
-        }
-      });
-    });
-  </script>
+        <!-- Email -->
+        <div class="flex items-center space-x-4">
+          <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <i data-feather="mail" class="w-6 h-6 text-gray-500 dark:text-gray-300"></i>
+          </div>
+          <div>
+            <span class="font-semibold text-gray-600 dark:text-white">Email:</span>
+            <span class="text-gray-800 dark:text-white" id="email">
+              Email
+            </span>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="flex items-start space-x-4">
+          <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+            <i data-feather="map-pin" class="w-6 h-6 text-gray-500 dark:text-gray-300"></i>
+          </div>
+          <div>
+            <span class="font-semibold text-gray-600 dark:text-white">Address:</span>
+            <span class="text-gray-800 dark:text-white" id="address">
+              Address
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maps Point -->
+      <div class="mt-8 mb-20 relative z-10">
+        <div id="map" style="height: 50vh; max-height: 500px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div
+    class="fixed bottom-0 z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border-t left-1/2 border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+    <div class="grid h-full max-w-lg grid-cols-3 mx-auto font-medium">
+      <a href="./"
+        class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-700 group">
+        <i data-feather="home" class="w-5 h-5 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-500"></i>
+        <span class="text-sm group-hover:text-blue-600 dark:group-hover:text-blue-500">Home</span>
+      </a>
+      <a href="./new.html"
+        class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-700 group">
+        <i data-feather="user-plus" class="w-5 h-5 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-500"></i>
+        <span class="text-sm group-hover:text-blue-600 dark:group-hover:text-blue-500">New</span>
+      </a>
+      <a href="./info.html"
+        class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-700 group">
+        <i data-feather="info" class="w-5 h-5 mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-500"></i>
+        <span class="text-sm group-hover:text-blue-600 dark:group-hover:text-blue-500">Info</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./assets/js/global.js"></script>
+  <script src="./assets/js/storage.js"></script>
+  <script src="./assets/js/detail.js"></script>
 </body>
 
 </html>
