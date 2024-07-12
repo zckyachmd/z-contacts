@@ -1,0 +1,27 @@
+{
+  "name": "z-contacts",
+  "version": "1.0.0",
+  "description": "Z-Contacts is a Customer Relationship Management (CRM) application designed to help you manage your contacts efficiently.",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./assets/css/main.css -o ./assets/css/style.css --watch",
+    "build": "npx tailwindcss -i ./assets/css/main.css -o ./assets/css/style.css --minify"
+  },
+  "keywords": [
+    "crm",
+    "tailwindcss",
+    "flowbite"
+  ],
+  "devDependencies": {
+    "tailwindcss": "^3.4.4"
+  },
+  "homepage": "https://github.com/zckyachmd/z-contacts#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zckyachmd/z-contacts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zckyachmd/z-contacts/issues"
+  },
+  "author": "Zacky Achmad",
+  "license": "MIT"
+}

@@ -45,7 +45,7 @@ const renderContactDetails = ({ name, phone, email, company, address }) => {
 
   // Email element
   const emailElement = document.querySelector("#email");
-  emailElement.textContent = "-";
+  emailElement.textContent = "";
   if (email.trim().length > 0) {
     const emailLink = document.createElement("a");
     emailLink.href = `mailto:${email}`;
@@ -53,6 +53,8 @@ const renderContactDetails = ({ name, phone, email, company, address }) => {
     emailLink.className =
       "text-blue-500 hover:underline hover:text-blue-600 dark:hover:text-blue-400 dark:text-blue-500";
     emailElement.appendChild(emailLink);
+  } else {
+    emailElement.textContent = "-";
   }
 
   // Address element
