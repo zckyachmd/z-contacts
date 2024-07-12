@@ -15,6 +15,3 @@
 *.iml
 *.ipynb
 *.pyc
-
-# MacOS directories and files
-.DS_Store

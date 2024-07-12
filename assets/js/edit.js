@@ -1,6 +1,6 @@
 const getContactIdFromURL = () => {
   const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get("id");
+  return parseInt(urlParams.get("id"));
 };
 
 const formEditContact = document.getElementById("form-edit-contact");

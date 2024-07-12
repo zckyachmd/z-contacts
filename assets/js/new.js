@@ -1,6 +1,6 @@
 const generateContactId = () => {
   const savedContacts = getContacts();
-  return (savedContacts.length + 1).toString();
+  return savedContacts.length + 1;
 };
 
 const handleSubmit = async (formData) => {
