@@ -44,7 +44,7 @@ const seedContacts = () => {
 const getContacts = (sort = false) => {
   let contacts = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-  if (sort) {
+  if (sort && contacts.length > 0) {
     contacts.sort((a, b) => {
       if (a.name < b.name) {
         return -1;

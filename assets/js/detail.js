@@ -45,7 +45,8 @@ const renderContactDetails = ({ name, phone, email, company, address }) => {
 
   // Email element
   const emailElement = document.querySelector("#email");
-  emailElement.textContent = "-";
+  emailElement.textContent = email.trim().length > 0 ? "" : "-";
+
   if (email.trim().length > 0) {
     const emailLink = document.createElement("a");
     emailLink.href = `mailto:${email}`;
